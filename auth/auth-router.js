@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrpyt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const constants = require('../constants/constants');
+const constants = require('../utils/constants');
 const Users = require('./auth-model');
 
 router.post('/register', (req, res) => {
@@ -26,12 +26,10 @@ router.post('/login', (req, res) => {
     if (user && bcrpyt.compareSync(password, user.password)) {
       const token = signToken(user);
 
-      res
-        .status(200)
-        .json({
-          message: `Welcome to Dad Jokes, ${user.username}!`,
-          token,
-        });
+      res.status(200).json({
+        message: `Welcome to Dad Jokes, ${user.username}!`,
+        token,
+      });
     } else {
       res
         .status(401)
